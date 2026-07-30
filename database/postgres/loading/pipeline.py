@@ -109,6 +109,17 @@ def run_load_pipeline(*, truncate: bool = True) -> int:
                 success = True
                 logger.info("Transaction committed")
 
+                # DataCo has no warehouse/vendor/inventory entities — seed synthetics.
+                logger.info("Seeding synthetic operations masters (warehouses/inventory/vendors)")
+                from connection import SCHEMA_DIR, run_sql_file
+                from loading.seed_operations_masters import seed_operations_masters
+
+                ext = SCHEMA_DIR / "12_ops_master_extensions.sql"
+                if ext.exists():
+                    run_sql_file(ext, conn=conn)
+                seed_operations_masters(conn)
+                logger.info("Operations masters seeded")
+
     except Exception as exc:  # noqa: BLE001
         logger.exception("Load pipeline failed: %s", exc)
         success = False

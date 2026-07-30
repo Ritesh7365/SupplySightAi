@@ -13,8 +13,10 @@ from app.schemas.dashboard import (
     ExecutiveDashboardResponse,
     GeographicPerformanceResponse,
     InventoryAlertsResponse,
+    NamedMetricResponse,
     ProductPerformanceResponse,
     RecentOrdersResponse,
+    RecentShipmentsResponse,
     SalesPerformanceResponse,
     ShippingPerformanceResponse,
 )
@@ -173,3 +175,45 @@ def get_inventory_alerts(
     limit: Optional[int] = Query(default=20, ge=1, le=100),
 ) -> InventoryAlertsResponse:
     return DashboardService(db).get_inventory_alerts(limit=limit)
+
+
+@router.get(
+    "/recent-shipments",
+    response_model=RecentShipmentsResponse,
+    summary="Recent shipments",
+    description="Latest shipments with mode, status, and late-delivery flag.",
+)
+def get_recent_shipments(
+    db: DbSession,
+    _user: OptionalUser,
+    limit: Optional[int] = Query(default=10, ge=1, le=50),
+) -> RecentShipmentsResponse:
+    return DashboardService(db).get_recent_shipments(limit=limit)
+
+
+@router.get(
+    "/revenue-by-category",
+    response_model=NamedMetricResponse,
+    summary="Revenue by category",
+    description="Category rollup from analytics.vw_product_performance.",
+)
+def get_revenue_by_category(
+    db: DbSession,
+    _user: OptionalUser,
+    limit: Optional[int] = Query(default=12, ge=1, le=50),
+) -> NamedMetricResponse:
+    return DashboardService(db).get_revenue_by_category(limit=limit)
+
+
+@router.get(
+    "/revenue-by-department",
+    response_model=NamedMetricResponse,
+    summary="Revenue by department",
+    description="Department rollup from analytics.vw_product_performance.",
+)
+def get_revenue_by_department(
+    db: DbSession,
+    _user: OptionalUser,
+    limit: Optional[int] = Query(default=12, ge=1, le=50),
+) -> NamedMetricResponse:
+    return DashboardService(db).get_revenue_by_department(limit=limit)

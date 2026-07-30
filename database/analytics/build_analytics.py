@@ -37,6 +37,9 @@ ANALYTICS_VIEWS: tuple[str, ...] = (
     "vw_product_performance",
     "vw_shipping_performance",
     "vw_geographic_performance",
+    "vw_inventory_performance",
+    "vw_warehouse_performance",
+    "vw_vendor_performance",
 )
 
 ANALYTICS_MATVIEWS: tuple[str, ...] = (

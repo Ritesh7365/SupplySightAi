@@ -1,18 +1,9 @@
 import type { Metadata } from "next";
 
-import { EmptyCanvas } from "@/components/layout/EmptyCanvas";
-import { PageHeader } from "@/components/layout/PageHeader";
+import { InventoryAnalytics } from "@/components/inventory/InventoryAnalytics";
 
 export const metadata: Metadata = { title: "Inventory" };
 
 export default function InventoryPage() {
-  return (
-    <section>
-      <PageHeader pathname="/inventory" />
-      <EmptyCanvas
-        title="Inventory workspace"
-        description="Warehouse and stock views will plug into this layout canvas."
-      />
-    </section>
-  );
+  return <InventoryAnalytics />;
 }

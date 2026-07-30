@@ -28,10 +28,14 @@ from app.schemas.dashboard import (
     GeographicPerformanceResponse,
     InventoryAlertItem,
     InventoryAlertsResponse,
+    NamedMetricItem,
+    NamedMetricResponse,
     ProductPerformanceItem,
     ProductPerformanceResponse,
     RecentOrderItem,
     RecentOrdersResponse,
+    RecentShipmentItem,
+    RecentShipmentsResponse,
     SalesPerformanceItem,
     SalesPerformanceResponse,
     SegmentSummaryItem,
@@ -59,7 +63,67 @@ class DashboardService:
 
         if row is None:
             raise NotFoundError("Executive dashboard view returned no data")
-        return ExecutiveDashboardResponse.model_validate(row)
+
+        payload = ExecutiveDashboardResponse.model_validate(row)
+        return self._enrich_executive(payload)
+
+    def _enrich_executive(self, payload: ExecutiveDashboardResponse) -> ExecutiveDashboardResponse:
+        """Attach shipping / ops KPIs without altering analytics view contracts."""
+        avg_lead: Optional[Decimal] = None
+        try:
+            shipping_rows = list(
+                self.db.execute(select(ShippingPerformanceView)).scalars().all()
+            )
+            weighted_days = Decimal("0")
+            weight = 0
+            for s in shipping_rows:
+                if s.avg_shipping_time_days is None:
+                    continue
+                count = int(s.shipment_count or 0)
+                weighted_days += Decimal(s.avg_shipping_time_days) * count
+                weight += count
+            if weight:
+                avg_lead = (weighted_days / weight).quantize(Decimal("0.01"))
+        except Exception:  # noqa: BLE001
+            logger.warning("Unable to enrich avg_lead_time_days", exc_info=True)
+
+        vendor_count = warehouse_count = inventory_sku_count = 0
+        inventory_units: Optional[Decimal] = None
+        try:
+            vendor_count = int(
+                self.db.execute(text("SELECT COUNT(*) FROM public.vendors")).scalar() or 0
+            )
+            warehouse_count = int(
+                self.db.execute(text("SELECT COUNT(*) FROM public.warehouses")).scalar() or 0
+            )
+            inv = self.db.execute(
+                text(
+                    """
+                    SELECT
+                        COUNT(*)::int AS sku_count,
+                        COALESCE(SUM(quantity_available), 0) AS units
+                    FROM public.inventory
+                    """
+                )
+            ).mappings().first()
+            if inv:
+                inventory_sku_count = int(inv["sku_count"] or 0)
+                inventory_units = Decimal(str(inv["units"] or 0))
+        except Exception:  # noqa: BLE001
+            logger.warning("Unable to enrich vendor/warehouse/inventory counts", exc_info=True)
+
+        return payload.model_copy(
+            update={
+                "avg_lead_time_days": avg_lead,
+                "vendor_count": vendor_count,
+                "warehouse_count": warehouse_count,
+                "inventory_sku_count": inventory_sku_count,
+                "inventory_units": inventory_units,
+                # Placeholder metrics until capacity + COGS dimensions exist
+                "inventory_turnover": None,
+                "warehouse_utilization_pct": None,
+            }
+        )
 
     def get_sales(
         self,
@@ -314,3 +378,91 @@ class DashboardService:
             low_stock_count=sum(1 for r in data if r.alert_type == "low_stock"),
             reorder_soon_count=sum(1 for r in data if r.alert_type == "reorder_soon"),
         )
+
+    def get_recent_shipments(self, *, limit: Optional[int] = None) -> RecentShipmentsResponse:
+        """Latest shipments from warehouse facts + shipping / customer dims."""
+        lim = clamp_limit(limit, default=10, maximum=50)
+        sql = text(
+            """
+            SELECT
+                fsh.order_id,
+                ds.shipping_mode,
+                fsh.delivery_status,
+                fsh.actual_days,
+                fsh.scheduled_days,
+                (fsh.late_delivery = 1) AS late_delivery,
+                dd.calendar_date AS order_date,
+                TRIM(
+                    CONCAT(
+                        COALESCE(dc.first_name, ''),
+                        ' ',
+                        COALESCE(dc.last_name, '')
+                    )
+                ) AS customer_name
+            FROM warehouse.fact_shipments fsh
+            INNER JOIN warehouse.dim_shipping ds
+                ON ds.shipping_key = fsh.shipping_key
+            INNER JOIN warehouse.dim_date dd
+                ON dd.date_key = fsh.date_key
+            LEFT JOIN warehouse.dim_customer dc
+                ON dc.customer_key = fsh.customer_key
+            ORDER BY dd.calendar_date DESC, fsh.shipment_key DESC
+            LIMIT :limit
+            """
+        )
+        try:
+            rows = self.db.execute(sql, {"limit": lim}).mappings().all()
+        except Exception as exc:  # noqa: BLE001
+            logger.exception("Failed to load recent shipments")
+            raise DatabaseError("Unable to load recent shipments") from exc
+
+        data = [RecentShipmentItem.model_validate(dict(r)) for r in rows]
+        return RecentShipmentsResponse(data=data, count=len(data), limit=lim)
+
+    def get_revenue_by_category(self, *, limit: Optional[int] = None) -> NamedMetricResponse:
+        lim = clamp_limit(limit, default=12, maximum=50)
+        sql = text(
+            """
+            SELECT
+                category_name AS name,
+                ROUND(SUM(sales), 2) AS sales,
+                ROUND(SUM(profit), 2) AS profit,
+                SUM(order_count)::int AS order_count,
+                SUM(units_sold)::int AS units_sold
+            FROM analytics.vw_product_performance
+            GROUP BY category_name
+            ORDER BY SUM(sales) DESC
+            LIMIT :limit
+            """
+        )
+        try:
+            rows = self.db.execute(sql, {"limit": lim}).mappings().all()
+        except Exception as exc:  # noqa: BLE001
+            logger.exception("Failed to load revenue by category")
+            raise DatabaseError("Unable to load revenue by category") from exc
+        data = [NamedMetricItem.model_validate(dict(r)) for r in rows]
+        return NamedMetricResponse(data=data, count=len(data), limit=lim)
+
+    def get_revenue_by_department(self, *, limit: Optional[int] = None) -> NamedMetricResponse:
+        lim = clamp_limit(limit, default=12, maximum=50)
+        sql = text(
+            """
+            SELECT
+                department_name AS name,
+                ROUND(SUM(sales), 2) AS sales,
+                ROUND(SUM(profit), 2) AS profit,
+                SUM(order_count)::int AS order_count,
+                SUM(units_sold)::int AS units_sold
+            FROM analytics.vw_product_performance
+            GROUP BY department_name
+            ORDER BY SUM(sales) DESC
+            LIMIT :limit
+            """
+        )
+        try:
+            rows = self.db.execute(sql, {"limit": lim}).mappings().all()
+        except Exception as exc:  # noqa: BLE001
+            logger.exception("Failed to load revenue by department")
+            raise DatabaseError("Unable to load revenue by department") from exc
+        data = [NamedMetricItem.model_validate(dict(r)) for r in rows]
+        return NamedMetricResponse(data=data, count=len(data), limit=lim)

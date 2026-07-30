@@ -2,6 +2,7 @@
 
 import type { ReactNode } from "react";
 
+import { AiInsightsPanel } from "@/components/ai/AiInsightsPanel";
 import { Breadcrumbs } from "@/components/layout/Breadcrumbs";
 import { Navbar } from "@/components/layout/Navbar";
 import { ResponsiveSidebar } from "@/components/layout/ResponsiveSidebar";
@@ -42,6 +43,7 @@ function AppShellFrame({ children }: { children: ReactNode }) {
           </div>
         </main>
       </div>
+      <AiInsightsPanel floating />
     </div>
   );
 }

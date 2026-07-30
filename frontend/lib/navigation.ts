@@ -1,6 +1,7 @@
 import type { LucideIcon } from "lucide-react";
 import {
   Boxes,
+  Building2,
   LayoutDashboard,
   LineChart,
   Package,
@@ -53,20 +54,32 @@ export const mainNav: NavItem[] = [
   {
     title: "Inventory",
     href: "/inventory",
-    icon: Warehouse,
-    description: "Stock and warehouses",
+    icon: Boxes,
+    description: "Stock levels and alerts",
   },
   {
-    title: "AI Insights",
-    href: "/ai-insights",
-    icon: Sparkles,
-    description: "Model-driven recommendations",
+    title: "Warehouses",
+    href: "/warehouses",
+    icon: Warehouse,
+    description: "Capacity and utilization",
+  },
+  {
+    title: "Vendors",
+    href: "/vendors",
+    icon: Building2,
+    description: "Supplier performance",
   },
   {
     title: "Forecasting",
     href: "/forecasting",
     icon: LineChart,
     description: "Demand projections",
+  },
+  {
+    title: "AI Insights",
+    href: "/ai-insights",
+    icon: Sparkles,
+    description: "Model-driven recommendations",
   },
 ];
 

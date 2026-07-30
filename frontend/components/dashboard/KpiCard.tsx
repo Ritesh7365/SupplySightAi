@@ -1,6 +1,9 @@
-import type { LucideIcon } from "lucide-react";
-import { TrendingDown, TrendingUp, Minus } from "lucide-react";
+"use client";
 
+import type { LucideIcon } from "lucide-react";
+import { Minus, TrendingDown, TrendingUp } from "lucide-react";
+
+import { Sparkline } from "@/components/charts";
 import { Card, CardContent } from "@/components/ui/card";
 import { formatGrowth } from "@/lib/format";
 import { cn } from "@/lib/utils";
@@ -9,17 +12,34 @@ type KpiCardProps = {
   title: string;
   value: string;
   icon: LucideIcon;
-  growth: number | null;
+  growth?: number | null;
+  sparkline?: number[];
   accent?: string;
+  hint?: string;
+  muted?: boolean;
 };
 
-export function KpiCard({ title, value, icon: Icon, growth, accent }: KpiCardProps) {
+export function KpiCard({
+  title,
+  value,
+  icon: Icon,
+  growth = null,
+  sparkline,
+  accent,
+  hint = "vs prior month",
+  muted,
+}: KpiCardProps) {
   const positive = growth != null && growth > 0;
   const negative = growth != null && growth < 0;
   const TrendIcon = positive ? TrendingUp : negative ? TrendingDown : Minus;
 
   return (
-    <Card className="overflow-hidden transition-shadow hover:shadow-md">
+    <Card
+      className={cn(
+        "overflow-hidden transition-all duration-200 hover:-translate-y-0.5 hover:shadow-md",
+        muted && "opacity-90",
+      )}
+    >
       <CardContent className="p-5">
         <div className="flex items-start justify-between gap-3">
           <div className="min-w-0">
@@ -37,7 +57,14 @@ export function KpiCard({ title, value, icon: Icon, growth, accent }: KpiCardPro
             <Icon className="size-5" aria-hidden />
           </span>
         </div>
-        <div className="mt-4 flex items-center gap-2 text-sm">
+
+        {sparkline && sparkline.length > 1 ? (
+          <div className="mt-3">
+            <Sparkline data={sparkline} />
+          </div>
+        ) : null}
+
+        <div className="mt-3 flex items-center gap-2 text-sm">
           <span
             className={cn(
               "inline-flex items-center gap-1 rounded-full px-2 py-0.5 text-xs font-semibold",
@@ -49,7 +76,7 @@ export function KpiCard({ title, value, icon: Icon, growth, accent }: KpiCardPro
             <TrendIcon className="size-3.5" aria-hidden />
             {formatGrowth(growth)}
           </span>
-          <span className="text-xs text-muted-foreground">vs prior month</span>
+          <span className="text-xs text-muted-foreground">{hint}</span>
         </div>
       </CardContent>
     </Card>

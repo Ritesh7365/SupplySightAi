@@ -44,6 +44,14 @@ class ExecutiveDashboardResponse(ORMModel):
     late_shipments: int
     overall_profit_margin_pct: Optional[Decimal] = None
     refreshed_at: datetime
+    # Enriched operational KPIs (optional; null/0 when source data is empty)
+    avg_lead_time_days: Optional[Decimal] = None
+    vendor_count: int = 0
+    warehouse_count: int = 0
+    inventory_sku_count: int = 0
+    inventory_units: Optional[Decimal] = None
+    inventory_turnover: Optional[Decimal] = None
+    warehouse_utilization_pct: Optional[Decimal] = None
 
 
 class SalesPerformanceItem(ORMModel):
@@ -219,3 +227,34 @@ class InventoryAlertsResponse(ListResponse[InventoryAlertItem]):
     out_of_stock_count: int = 0
     low_stock_count: int = 0
     reorder_soon_count: int = 0
+
+
+class RecentShipmentItem(ORMModel):
+    """Recent shipment row for executive operations panels."""
+
+    order_id: int
+    shipping_mode: str
+    delivery_status: str
+    actual_days: Optional[int] = None
+    scheduled_days: Optional[int] = None
+    late_delivery: bool
+    order_date: Optional[datetime] = None
+    customer_name: Optional[str] = None
+
+
+class RecentShipmentsResponse(ListResponse[RecentShipmentItem]):
+    data: List[RecentShipmentItem]
+
+
+class NamedMetricItem(ORMModel):
+    """Generic named rollup for category / department charts."""
+
+    name: str
+    sales: Decimal
+    profit: Decimal
+    order_count: int = 0
+    units_sold: int = 0
+
+
+class NamedMetricResponse(ListResponse[NamedMetricItem]):
+    data: List[NamedMetricItem]

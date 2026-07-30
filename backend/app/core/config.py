@@ -46,7 +46,9 @@ class Settings(BaseSettings):
     cors_origins: List[str] = Field(
         default_factory=lambda: [
             "http://localhost:3000",
+            "http://127.0.0.1:3000",
             "http://localhost:3001",
+            "http://127.0.0.1:3001",
             "http://localhost:5173",
             "http://localhost:8000",
         ],
@@ -73,6 +75,11 @@ class Settings(BaseSettings):
     jwt_algorithm: str = Field(default="HS256", alias="JWT_ALGORITHM")
     access_token_expire_minutes: int = Field(default=30, alias="ACCESS_TOKEN_EXPIRE_MINUTES")
     auth_enabled: bool = Field(default=False, alias="AUTH_ENABLED")
+
+    # AI Copilot (Groq / LangChain)
+    groq_api_key: str | None = Field(default=None, alias="GROQ_API_KEY")
+    ai_provider: str = Field(default="groq", alias="AI_PROVIDER")
+    ai_model: str = Field(default="llama-3.3-70b-versatile", alias="AI_MODEL")
 
     @field_validator("cors_origins", mode="before")
     @classmethod
