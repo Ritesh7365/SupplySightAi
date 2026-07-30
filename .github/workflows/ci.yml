@@ -1,0 +1,33 @@
+﻿# =============================================================================
+# SupplySight AI — CI Workflow (scaffold)
+# Purpose: Placeholder continuous integration pipeline.
+# Jobs are stubs until application code and test runners are implemented.
+# =============================================================================
+
+name: CI
+
+on:
+  push:
+    branches: [main, develop]
+  pull_request:
+    branches: [main, develop]
+
+jobs:
+  # ---------------------------------------------------------------------------
+  # Placeholder job — replace with real lint/test matrix later
+  # ---------------------------------------------------------------------------
+  scaffold-check:
+    name: Scaffold check
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Verify key paths exist
+        run: |
+          test -f README.md
+          test -d frontend
+          test -d backend
+          test -d ml
+          test -f docker-compose.yml
+          echo "SupplySight AI scaffold OK"

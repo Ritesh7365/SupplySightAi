@@ -1,0 +1,139 @@
+# SupplySight AI — Database Verification Report
+
+**Generated:** 2026-07-30 12:16:21 UTC
+**DDL target schema:** `public`
+
+## 1. Schemas
+
+| Schema | Present | Notes |
+|--------|---------|-------|
+| `staging` | Yes | Reserved for landing loads |
+| `warehouse` | Yes | Reserved for future fact/dimension tables (empty for now) |
+| `analytics` | Yes | Views and materialized views |
+| `ml` | Yes | Reserved for ML feature/scoring tables |
+
+## 2. Tables Created
+
+Found **11** base table(s) in `public`.
+
+| Table | Status |
+|-------|--------|
+| `public.departments` | CREATED |
+| `public.categories` | CREATED |
+| `public.products` | CREATED |
+| `public.customers` | CREATED |
+| `public.orders` | CREATED |
+| `public.order_items` | CREATED |
+| `public.shipments` | CREATED |
+| `public.warehouses` | CREATED |
+| `public.inventory` | CREATED |
+| `public.vendors` | CREATED |
+| `public.vendor_products` | CREATED |
+
+## 3. Primary Keys
+
+| Table | Constraint | Columns |
+|-------|------------|---------|
+| `categories` | `categories_pkey` | `category_id` |
+| `customers` | `customers_pkey` | `customer_id` |
+| `departments` | `departments_pkey` | `department_id` |
+| `inventory` | `inventory_pkey` | `inventory_id` |
+| `order_items` | `order_items_pkey` | `order_item_id` |
+| `orders` | `orders_pkey` | `order_id` |
+| `products` | `products_pkey` | `product_id` |
+| `shipments` | `shipments_pkey` | `shipment_id` |
+| `vendor_products` | `vendor_products_pkey` | `vendor_product_id` |
+| `vendors` | `vendors_pkey` | `vendor_id` |
+| `warehouses` | `warehouses_pkey` | `warehouse_id` |
+
+## 4. Foreign Keys
+
+| Child | Column | Parent | Column | Constraint |
+|-------|--------|--------|--------|------------|
+| `categories` | `department_id` | `departments` | `department_id` | `fk_categories_department` |
+| `inventory` | `product_id` | `products` | `product_id` | `fk_inventory_product` |
+| `inventory` | `warehouse_id` | `warehouses` | `warehouse_id` | `fk_inventory_warehouse` |
+| `order_items` | `order_id` | `orders` | `order_id` | `fk_order_items_order` |
+| `order_items` | `product_id` | `products` | `product_id` | `fk_order_items_product` |
+| `orders` | `customer_id` | `customers` | `customer_id` | `fk_orders_customer` |
+| `products` | `category_id` | `categories` | `category_id` | `fk_products_category` |
+| `shipments` | `order_id` | `orders` | `order_id` | `fk_shipments_order` |
+| `vendor_products` | `product_id` | `products` | `product_id` | `fk_vendor_products_product` |
+| `vendor_products` | `vendor_id` | `vendors` | `vendor_id` | `fk_vendor_products_vendor` |
+
+## 5. Indexes
+
+| Table | Index |
+|-------|-------|
+| `categories` | `categories_pkey` |
+| `categories` | `ix_categories_department_id` |
+| `categories` | `uq_categories_name` |
+| `customers` | `customers_pkey` |
+| `customers` | `ix_customers_country_city` |
+| `customers` | `ix_customers_email` |
+| `customers` | `ix_customers_segment` |
+| `departments` | `departments_pkey` |
+| `departments` | `uq_departments_name` |
+| `inventory` | `inventory_pkey` |
+| `inventory` | `ix_inventory_product_id` |
+| `inventory` | `ix_inventory_warehouse_id` |
+| `inventory` | `uq_inventory_warehouse_product` |
+| `order_items` | `ix_order_items_order_id` |
+| `order_items` | `ix_order_items_order_product` |
+| `order_items` | `ix_order_items_product_id` |
+| `order_items` | `order_items_pkey` |
+| `orders` | `ix_orders_customer_id` |
+| `orders` | `ix_orders_geo` |
+| `orders` | `ix_orders_market_region` |
+| `orders` | `ix_orders_order_date` |
+| `orders` | `ix_orders_status` |
+| `orders` | `orders_pkey` |
+| `products` | `ix_products_category_id` |
+| `products` | `ix_products_name` |
+| `products` | `ix_products_status` |
+| `products` | `products_pkey` |
+| `shipments` | `ix_shipments_delivery_status` |
+| `shipments` | `ix_shipments_late_risk` |
+| `shipments` | `ix_shipments_shipping_date` |
+| `shipments` | `ix_shipments_shipping_mode` |
+| `shipments` | `shipments_pkey` |
+| `shipments` | `uq_shipments_order` |
+| `vendor_products` | `ix_vendor_products_product_id` |
+| `vendor_products` | `uq_vendor_products` |
+| `vendor_products` | `vendor_products_pkey` |
+| `vendors` | `ix_vendors_risk_tier` |
+| `vendors` | `uq_vendors_code` |
+| `vendors` | `vendors_pkey` |
+| `warehouses` | `uq_warehouses_code` |
+| `warehouses` | `warehouses_pkey` |
+
+## 6. Row Counts
+
+_Counts reflect current table contents. Before CSV load they should be 0._
+
+| Table | Row Count |
+|-------|-----------|
+| `public.categories` | 0 |
+| `public.customers` | 0 |
+| `public.departments` | 0 |
+| `public.inventory` | 0 |
+| `public.order_items` | 0 |
+| `public.orders` | 0 |
+| `public.products` | 0 |
+| `public.shipments` | 0 |
+| `public.vendor_products` | 0 |
+| `public.vendors` | 0 |
+| `public.warehouses` | 0 |
+
+## 7. Summary
+
+- Platform schemas present: **4/4**
+- Expected `public` tables present: **11/11**
+- Primary keys: **11**
+- Foreign keys: **10**
+- Indexes: **41**
+- `warehouse` schema: reserved / empty (no DDL applied here)
+
+---
+
+*Generated by `database/postgres/verify_database.py`*

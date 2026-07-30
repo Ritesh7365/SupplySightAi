@@ -1,0 +1,30 @@
+{
+  "name": "supplysight-ai",
+  "version": "0.1.0",
+  "private": true,
+  "description": "SupplySight AI — Intelligent Supply Chain Analytics & Inventory Optimization Platform (monorepo root package metadata)",
+  "scripts": {
+    "dev:frontend": "echo \"Frontend scripts will be defined under frontend/package.json\"",
+    "lint": "echo \"Root lint placeholder — wire workspace tooling later\"",
+    "test": "echo \"Root test placeholder — see tests/ and package-local suites\""
+  },
+  "keywords": [
+    "supply-chain",
+    "analytics",
+    "inventory",
+    "fastapi",
+    "nextjs",
+    "machine-learning"
+  ],
+  "author": "SupplySight AI Contributors",
+  "license": "MIT",
+  "engines": {
+    "node": ">=18"
+  },
+  "workspaces": [
+    "frontend"
+  ],
+  "comments": {
+    "note": "This root package.json is scaffolding only. Real Next.js dependencies belong in frontend/package.json when the app is scaffolded."
+  }
+}

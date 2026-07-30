@@ -1,0 +1,26 @@
+# =============================================================================
+# SupplySight AI — Root Python Dependencies (workspace umbrella)
+# Purpose: High-level ML/data science packages for notebooks and shared tooling.
+# Backend-specific pins live under backend/requirements/.
+# Do not treat this file as the FastAPI runtime lockfile.
+# =============================================================================
+
+# ----- Core data -----
+pandas>=2.0.0
+numpy>=1.24.0
+
+# ----- Machine learning -----
+scikit-learn>=1.3.0
+xgboost>=2.0.0
+lightgbm>=4.0.0
+prophet>=1.1.0
+shap>=0.44.0
+
+# ----- Notebooks / exploration -----
+jupyter>=1.0.0
+matplotlib>=3.7.0
+seaborn>=0.13.0
+
+# ----- Utilities -----
+python-dotenv>=1.0.0
+pyyaml>=6.0

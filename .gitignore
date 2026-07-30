@@ -1,0 +1,117 @@
+# =============================================================================
+# SupplySight AI — Git Ignore
+# Purpose: Exclude secrets, build artifacts, virtualenvs, OS junk, and large data.
+# =============================================================================
+
+# ----- Environment & secrets -----
+.env
+.env.local
+.env.*.local
+*.pem
+*.key
+secrets/
+credentials/
+
+# ----- Python -----
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+.venv/
+venv/
+ENV/
+env/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+.tox/
+.nox/
+*.log
+
+# ----- Node / Next.js -----
+node_modules/
+.npm
+.next/
+out/
+.turbo/
+*.tsbuildinfo
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# ----- ML / Data science -----
+# Keep folder structure; ignore large binaries and local artifacts
+ml/models/**/*.pkl
+ml/models/**/*.joblib
+ml/models/**/*.h5
+ml/models/**/*.onnx
+ml/artifacts/**
+!ml/artifacts/.gitkeep
+!ml/artifacts/README.md
+data/raw/**
+!data/raw/.gitkeep
+!data/raw/README.md
+data/processed/**
+!data/processed/.gitkeep
+!data/processed/README.md
+*.parquet
+*.feather
+*.h5
+*.hdf5
+checkpoints/
+wandb/
+mlruns/
+.ipynb_checkpoints/
+
+# ----- Database -----
+database/backup/**
+!database/backup/.gitkeep
+!database/backup/README.md
+*.sql.gz
+*.dump
+
+# ----- Docker -----
+docker-data/
+pgdata/
+
+# ----- IDE / OS -----
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+.DS_Store
+Thumbs.db
+Desktop.ini
+
+# ----- Database / ETL runtime -----
+database/etl/logs/
+database/postgres/logs/
+*.sql.gz
+*.dump
+
+# ----- Misc -----
+coverage/
+.tmp/
+tmp/
+temp/
+*.bak

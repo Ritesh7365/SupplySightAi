@@ -1,0 +1,10 @@
+﻿# =============================================================================
+# backend/requirements/ml.txt
+# Purpose: Optional ML inference dependencies for API workers.
+# Prefer sharing versions with root requirements.txt / ml package.
+# =============================================================================
+# -r base.txt
+# pandas
+# numpy
+# scikit-learn
+# joblib

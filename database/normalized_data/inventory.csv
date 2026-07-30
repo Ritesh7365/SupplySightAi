@@ -1,0 +1,1 @@
+inventory_id,warehouse_id,product_id,quantity_on_hand,quantity_reserved,reorder_point,reorder_quantity,as_of_ts,created_at,updated_at

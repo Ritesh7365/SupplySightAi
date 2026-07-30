@@ -1,0 +1,10 @@
+﻿# =============================================================================
+# backend/requirements/dev.txt
+# Purpose: Development and test tooling for the backend.
+# =============================================================================
+# -r base.txt
+# pytest
+# pytest-asyncio
+# httpx
+# ruff
+# mypy
