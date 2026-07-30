@@ -4,8 +4,11 @@
   "private": true,
   "description": "SupplySight AI — Intelligent Supply Chain Analytics & Inventory Optimization Platform (monorepo root package metadata)",
   "scripts": {
-    "dev:frontend": "echo \"Frontend scripts will be defined under frontend/package.json\"",
-    "lint": "echo \"Root lint placeholder — wire workspace tooling later\"",
+    "dev": "npm run dev --workspace frontend",
+    "dev:frontend": "npm run dev --workspace frontend",
+    "build:frontend": "npm run build --workspace frontend",
+    "lint:frontend": "npm run lint --workspace frontend",
+    "lint": "npm run lint --workspace frontend",
     "test": "echo \"Root test placeholder — see tests/ and package-local suites\""
   },
   "keywords": [
