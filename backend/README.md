@@ -5,11 +5,11 @@ FastAPI analytics API over the PostgreSQL ``analytics`` schema.
 ## Quick start
 
 ```bash
-# From repo root (or backend/)
+# From project root
 pip install -r backend/requirements/base.txt
 
-cd backend
-uvicorn app.main:app --reload --host 0.0.0.0 --port 8000
+uvicorn backend.app.main:app --reload --host 0.0.0.0 --port 8000
+# or: python -m uvicorn backend.app.main:app --reload
 ```
 
 - Swagger UI: http://localhost:8000/docs  

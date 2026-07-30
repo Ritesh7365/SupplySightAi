@@ -13,7 +13,7 @@ from typing import Annotated, Optional
 from fastapi import Depends, HTTPException, status
 from fastapi.security import HTTPAuthorizationCredentials, HTTPBearer
 
-from app.core.config import Settings, get_settings
+from backend.app.core.config import Settings, get_settings
 
 # Bearer scheme does not auto-error when credentials are missing
 bearer_scheme = HTTPBearer(auto_error=False)

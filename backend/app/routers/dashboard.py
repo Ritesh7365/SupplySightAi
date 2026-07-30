@@ -6,8 +6,8 @@ from typing import Optional
 
 from fastapi import APIRouter, Query
 
-from app.core.deps import DbSession, OptionalUser
-from app.schemas.dashboard import (
+from backend.app.core.deps import DbSession, OptionalUser
+from backend.app.schemas.dashboard import (
     CustomersDashboardResponse,
     ExecutiveDashboardResponse,
     GeographicPerformanceResponse,
@@ -15,7 +15,7 @@ from app.schemas.dashboard import (
     SalesPerformanceResponse,
     ShippingPerformanceResponse,
 )
-from app.services.dashboard_service import DashboardService
+from backend.app.services.dashboard_service import DashboardService
 
 router = APIRouter(prefix="/dashboard", tags=["Dashboard"])
 

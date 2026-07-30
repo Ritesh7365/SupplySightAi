@@ -10,9 +10,9 @@ from typing import Optional
 from sqlalchemy import func, select
 from sqlalchemy.orm import Session
 
-from app.core.exceptions import DatabaseError, NotFoundError
-from app.core.logging import get_logger
-from app.models.analytics_views import (
+from backend.app.core.exceptions import DatabaseError, NotFoundError
+from backend.app.core.logging import get_logger
+from backend.app.models.analytics_views import (
     CustomerPerformanceView,
     ExecutiveDashboardView,
     GeographicPerformanceView,
@@ -20,7 +20,7 @@ from app.models.analytics_views import (
     SalesPerformanceView,
     ShippingPerformanceView,
 )
-from app.schemas.dashboard import (
+from backend.app.schemas.dashboard import (
     CustomerPerformanceItem,
     CustomersDashboardResponse,
     ExecutiveDashboardResponse,
@@ -34,7 +34,7 @@ from app.schemas.dashboard import (
     ShippingPerformanceItem,
     ShippingPerformanceResponse,
 )
-from app.utils.pagination import clamp_limit
+from backend.app.utils.pagination import clamp_limit
 
 logger = get_logger("services.dashboard")
 

@@ -5,7 +5,7 @@ from __future__ import annotations
 from decimal import Decimal
 from typing import List, Optional
 
-from app.schemas.common import ListResponse, ORMModel
+from backend.app.schemas.common import ListResponse, ORMModel
 
 
 class MonthlySalesPoint(ORMModel):

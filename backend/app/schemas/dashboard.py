@@ -8,7 +8,7 @@ from typing import List, Optional
 
 from pydantic import Field
 
-from app.schemas.common import ListResponse, ORMModel
+from backend.app.schemas.common import ListResponse, ORMModel
 
 
 class ExecutiveDashboardResponse(ORMModel):

@@ -13,8 +13,8 @@ from sqlalchemy import create_engine, text
 from sqlalchemy.engine import Engine
 from sqlalchemy.orm import Session, sessionmaker
 
-from app.core.config import Settings, get_settings
-from app.core.logging import get_logger
+from backend.app.core.config import Settings, get_settings
+from backend.app.core.logging import get_logger
 
 logger = get_logger("database")
 

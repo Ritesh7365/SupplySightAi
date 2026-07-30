@@ -4,10 +4,10 @@ from __future__ import annotations
 
 from fastapi import APIRouter
 
-from app.core.config import get_settings
-from app.core.logging import get_logger
-from app.database.session import check_db_connection
-from app.schemas.common import HealthResponse
+from backend.app.core.config import get_settings
+from backend.app.core.logging import get_logger
+from backend.app.database.session import check_db_connection
+from backend.app.schemas.common import HealthResponse
 
 router = APIRouter(tags=["Health"])
 logger = get_logger("routers.health")

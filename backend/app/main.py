@@ -1,9 +1,10 @@
 """
 SupplySight AI — FastAPI application entrypoint.
 
-Run (from ``backend/``)::
+Run (from project root)::
 
-    uvicorn app.main:app --reload --host 0.0.0.0 --port 8000
+    uvicorn backend.app.main:app --reload --host 0.0.0.0 --port 8000
+    python -m uvicorn backend.app.main:app --reload
 
 OpenAPI / Swagger UI: ``http://localhost:8000/docs``
 """
@@ -16,12 +17,12 @@ from typing import AsyncIterator
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
-from app import __version__
-from app.api.router import build_api_router
-from app.core.config import get_settings
-from app.core.exceptions import register_exception_handlers
-from app.core.logging import get_logger, setup_logging
-from app.database.session import dispose_engine, init_db
+from backend.app import __version__
+from backend.app.api.router import build_api_router
+from backend.app.core.config import get_settings
+from backend.app.core.exceptions import register_exception_handlers
+from backend.app.core.logging import get_logger, setup_logging
+from backend.app.database.session import dispose_engine, init_db
 
 logger = get_logger("main")
 

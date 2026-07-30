@@ -8,9 +8,9 @@ from typing import Annotated
 from fastapi import Depends
 from sqlalchemy.orm import Session
 
-from app.core.config import Settings, get_settings
-from app.core.security import AuthUser, get_current_user_optional
-from app.database.session import get_db
+from backend.app.core.config import Settings, get_settings
+from backend.app.core.security import AuthUser, get_current_user_optional
+from backend.app.database.session import get_db
 
 DbSession = Annotated[Session, Depends(get_db)]
 AppSettings = Annotated[Settings, Depends(get_settings)]
