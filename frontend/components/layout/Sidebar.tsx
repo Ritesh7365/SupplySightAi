@@ -23,37 +23,48 @@ export function Sidebar({ className, forceExpanded = false }: SidebarProps) {
   return (
     <aside
       className={cn(
-        "flex h-full flex-col border-r border-sidebar-border bg-sidebar text-sidebar-foreground",
+        "flex h-full min-h-0 w-full flex-col bg-sidebar text-sidebar-foreground",
         className,
       )}
     >
+      {/* Brand header — auto height so subtitle never clips the divider */}
       <div
         className={cn(
-          "flex h-16 items-center border-b border-sidebar-border px-3",
-          isCollapsed ? "justify-center" : "justify-between gap-2",
+          "shrink-0 border-b border-sidebar-border px-3 pb-4 pt-4",
+          isCollapsed && "px-2",
         )}
       >
-        <Logo collapsed={isCollapsed} />
-        {!forceExpanded ? (
-          <button
-            type="button"
-            onClick={toggleCollapsed}
-            aria-label={isCollapsed ? "Expand sidebar" : "Collapse sidebar"}
-            className={cn(
-              "inline-flex size-9 items-center justify-center rounded-xl text-muted-foreground transition-colors hover:bg-muted hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring",
-              isCollapsed && "hidden lg:inline-flex",
-            )}
-          >
-            {isCollapsed ? (
-              <PanelLeftOpen className="size-4" aria-hidden />
-            ) : (
-              <PanelLeftClose className="size-4" aria-hidden />
-            )}
-          </button>
-        ) : null}
+        <div
+          className={cn(
+            "flex items-start gap-2",
+            isCollapsed ? "flex-col items-center" : "justify-between",
+          )}
+        >
+          <Logo collapsed={isCollapsed} className="min-w-0 flex-1" />
+          {!forceExpanded ? (
+            <button
+              type="button"
+              onClick={toggleCollapsed}
+              aria-label={isCollapsed ? "Expand sidebar" : "Collapse sidebar"}
+              className={cn(
+                "inline-flex size-9 shrink-0 items-center justify-center rounded-xl text-muted-foreground transition-colors hover:bg-muted hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring",
+                isCollapsed ? "mt-1" : "mt-0.5",
+              )}
+            >
+              {isCollapsed ? (
+                <PanelLeftOpen className="size-4" aria-hidden />
+              ) : (
+                <PanelLeftClose className="size-4" aria-hidden />
+              )}
+            </button>
+          ) : null}
+        </div>
       </div>
 
-      <nav className="flex flex-1 flex-col gap-6 overflow-y-auto px-3 py-4" aria-label="Primary">
+      <nav
+        className="flex min-h-0 flex-1 flex-col gap-6 overflow-y-auto px-3 py-4"
+        aria-label="Primary"
+      >
         <NavSection
           label="Analytics"
           items={mainNav}
@@ -70,7 +81,7 @@ export function Sidebar({ className, forceExpanded = false }: SidebarProps) {
         />
       </nav>
 
-      <div className="border-t border-sidebar-border p-3">
+      <div className="shrink-0 border-t border-sidebar-border p-3">
         <div
           className={cn(
             "rounded-2xl border border-sidebar-border bg-card/70 p-3 shadow-sm transition-all",
