@@ -1,32 +1,43 @@
 ﻿# Frontend — SupplySight AI
 
-## Purpose
+Next.js 15 App Router foundation for the SupplySight AI UI.
 
-Houses the **Next.js / React / TypeScript** user interface for SupplySight AI: analytics dashboards, domain screens (orders, inventory, warehouses, vendors, transportation, forecast, predictions, AI insights), authentication UI, and settings.
+## Quick start
 
-## Contents
+```bash
+cd frontend
+npm install
+npm run dev
+```
 
-| Path | Role |
-|------|------|
-| `app/` | Next.js App Router entrypoints and page shells |
-| `components/` | Reusable UI by domain (layout, dashboard, orders, …) |
-| `api/` | Client-side API helpers / route handlers (future) |
-| `hooks/` | React Query and shared React hooks |
-| `lib/` | Utilities, Axios clients, formatters |
-| `styles/` | Global and Tailwind-related styles |
-| `types/` | Shared TypeScript types and DTOs |
-| `public/` | Static assets |
+Open http://localhost:3000
 
-## Tech (planned)
+| Script | Command |
+|--------|---------|
+| Dev (Turbopack) | `npm run dev` |
+| Production build | `npm run build` |
+| Start | `npm run start` |
+| Lint | `npm run lint` |
 
-Next.js, React, TypeScript, Tailwind CSS, Recharts, React Query, Axios
+## Stack
 
-## Future Implementation
+- Next.js 15 · React 19 · TypeScript
+- Tailwind CSS 3 · App Router · ESLint
+- Absolute imports via `@/*`
+- `components.json` prepared for shadcn/ui
 
-- Scaffold Next.js app with Tailwind and TypeScript
-- Build layout shell and authenticated routes
-- Wire React Query + Axios to FastAPI
-- Implement domain pages and chart components
-- Add auth/login and RBAC-aware navigation
+## Layout (preserved)
 
-> No application pages or business logic in this initialization phase.
+```
+frontend/
+├── app/           # App Router (layout, page, globals)
+├── components/    # Domain UI (placeholders)
+├── hooks/
+├── lib/
+├── styles/
+├── types/
+├── public/
+└── api/
+```
+
+Dashboards, charts, and API business logic are intentionally not included yet.

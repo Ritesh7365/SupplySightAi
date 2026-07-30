@@ -1,0 +1,38 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  /* Deep teal / slate industrial palette — not purple, not cream */
+  --background: 210 28% 97%;
+  --foreground: 210 40% 8%;
+  --card: 0 0% 100%;
+  --card-foreground: 210 40% 8%;
+  --primary: 174 62% 28%;
+  --primary-foreground: 160 40% 98%;
+  --secondary: 210 20% 92%;
+  --secondary-foreground: 210 30% 16%;
+  --muted: 210 18% 93%;
+  --muted-foreground: 210 12% 40%;
+  --accent: 28 85% 48%;
+  --accent-foreground: 30 40% 98%;
+  --border: 210 16% 86%;
+  --input: 210 16% 86%;
+  --ring: 174 62% 28%;
+  --radius: 0.5rem;
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  html {
+    @apply antialiased;
+  }
+
+  body {
+    @apply bg-background text-foreground;
+    min-height: 100vh;
+  }
+}

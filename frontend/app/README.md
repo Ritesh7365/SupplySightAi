@@ -1,15 +1,12 @@
-﻿# frontend/app
+﻿# `app/` — Next.js App Router
 
-## Purpose
+Active routes and global styles for SupplySight AI.
 
-Next.js **App Router** directory for routes, layouts, and page entrypoints.
+| File | Role |
+|------|------|
+| `layout.tsx` | Root layout, fonts, metadata |
+| `page.tsx` | Marketing homepage |
+| `globals.css` | Tailwind + design tokens |
+| `favicon.ico` | App icon |
 
-## Contents
-
-Empty placeholder. Future files may include `layout.tsx`, `page.tsx`, and nested route segments.
-
-## Future Implementation
-
-- Root layout, providers (React Query, theme)
-- Route groups for authenticated vs public areas
-- Loading and error boundaries per section
+Domain pages (dashboard, etc.) will be added here later.
