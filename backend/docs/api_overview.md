@@ -66,7 +66,7 @@ Common query params (where applicable): `limit`, `year`, `market`, `region`, `se
 
 ## Pagination utility
 
-Reusable helpers live in `backend.app.utils.pagination`:
+Reusable helpers live in `app.utils.pagination`:
 
 - `pagination_params` — FastAPI dependency (`page`, `page_size`, `limit`, `offset`)
 - `PaginationParams`, `Page`, `paginate_sequence`, `clamp_limit`

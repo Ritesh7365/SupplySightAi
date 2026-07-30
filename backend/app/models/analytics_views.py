@@ -14,7 +14,7 @@ from typing import Optional
 from sqlalchemy import BigInteger, DateTime, Integer, Numeric, String
 from sqlalchemy.orm import Mapped, mapped_column
 
-from backend.app.database.base import Base
+from app.database.base import Base
 
 ANALYTICS_SCHEMA = "analytics"
 

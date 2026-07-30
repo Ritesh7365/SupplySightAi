@@ -1,6 +1,6 @@
 """Utility helpers."""
 
-from backend.app.utils.pagination import (
+from app.utils.pagination import (
     Page,
     PageMeta,
     PaginationParams,

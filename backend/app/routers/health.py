@@ -5,11 +5,11 @@ from __future__ import annotations
 from fastapi import APIRouter, status
 from fastapi.responses import JSONResponse
 
-from backend.app import __version__
-from backend.app.core.config import get_settings
-from backend.app.core.logging import get_logger
-from backend.app.database.session import check_db_connection, get_pool_status
-from backend.app.schemas.common import (
+from app import __version__
+from app.core.config import get_settings
+from app.core.logging import get_logger
+from app.database.session import check_db_connection, get_pool_status
+from app.schemas.common import (
     OPENAPI_ERROR_RESPONSES,
     DatabaseHealthResponse,
     HealthResponse,

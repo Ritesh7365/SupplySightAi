@@ -9,14 +9,14 @@ from typing import Optional
 from sqlalchemy import select
 from sqlalchemy.orm import Session
 
-from backend.app.core.exceptions import DatabaseError
-from backend.app.core.logging import get_logger
-from backend.app.models.analytics_views import (
+from app.core.exceptions import DatabaseError
+from app.core.logging import get_logger
+from app.models.analytics_views import (
     CustomerPerformanceView,
     MonthlySalesMatView,
     ProductPerformanceView,
 )
-from backend.app.schemas.charts import (
+from app.schemas.charts import (
     MonthlySalesChartResponse,
     MonthlySalesPoint,
     TopCustomerPoint,
@@ -24,7 +24,7 @@ from backend.app.schemas.charts import (
     TopProductPoint,
     TopProductsChartResponse,
 )
-from backend.app.utils.pagination import clamp_limit
+from app.utils.pagination import clamp_limit
 
 logger = get_logger("services.charts")
 

@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 
-from backend.app import __version__
+from app import __version__
 
 API_DESCRIPTION = """
 ## SupplySight AI Analytics API

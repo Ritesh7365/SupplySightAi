@@ -24,29 +24,29 @@ Services → SQLAlchemy Session (pooled) → analytics.*
 
 | Package | Responsibility |
 |---------|----------------|
-| `backend.app.main` | App factory, lifespan, middleware stack |
-| `backend.app.api` | Versioned router aggregation |
-| `backend.app.routers` | HTTP endpoints |
-| `backend.app.services` | Analytics query orchestration |
-| `backend.app.models` | SQLAlchemy mappings to analytics views |
-| `backend.app.schemas` | Pydantic request/response models |
-| `backend.app.database` | Engine, pool, session dependency |
-| `backend.app.middleware` | Request ID, timing/logging, headers |
-| `backend.app.core` | Config, logging, exceptions, OpenAPI meta, auth stubs |
-| `backend.app.utils` | Pagination and row helpers |
+| `app.main` | App factory, lifespan, middleware stack |
+| `app.api` | Versioned router aggregation |
+| `app.routers` | HTTP endpoints |
+| `app.services` | Analytics query orchestration |
+| `app.models` | SQLAlchemy mappings to analytics views |
+| `app.schemas` | Pydantic request/response models |
+| `app.database` | Engine, pool, session dependency |
+| `app.middleware` | Request ID, timing/logging, headers |
+| `app.core` | Config, logging, exceptions, OpenAPI meta, auth stubs |
+| `app.utils` | Pagination and row helpers |
 
 ## Runtime entrypoint
 
-From the **project root**:
+From the **`backend/`** directory:
 
 ```bash
-uvicorn backend.app.main:app --reload --host 0.0.0.0 --port 8000
+python -m uvicorn app.main:app --reload
 ```
 
 ## Configuration
 
 Settings load from project-root `.env` via `pydantic-settings`
-(`backend.app.core.config.Settings`):
+(`app.core.config.Settings`):
 
 - API: `API_PREFIX`, `CORS_ORIGINS`, `LOG_LEVEL`
 - DB: `POSTGRES_*`, `DB_POOL_SIZE`, `DB_MAX_OVERFLOW`, `DB_POOL_TIMEOUT`, `DB_POOL_RECYCLE`

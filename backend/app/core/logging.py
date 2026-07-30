@@ -6,7 +6,7 @@ import logging
 import sys
 from typing import Optional
 
-from backend.app.core.config import Settings, get_settings
+from app.core.config import Settings, get_settings
 
 
 def setup_logging(settings: Optional[Settings] = None) -> None:

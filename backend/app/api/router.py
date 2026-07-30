@@ -2,7 +2,7 @@
 
 from fastapi import APIRouter
 
-from backend.app.routers import charts, dashboard
+from app.routers import charts, dashboard
 
 
 def build_api_router() -> APIRouter:

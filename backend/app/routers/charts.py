@@ -6,14 +6,14 @@ from typing import Optional
 
 from fastapi import APIRouter, Query
 
-from backend.app.core.deps import DbSession, OptionalUser
-from backend.app.schemas.charts import (
+from app.core.deps import DbSession, OptionalUser
+from app.schemas.charts import (
     MonthlySalesChartResponse,
     TopCustomersChartResponse,
     TopProductsChartResponse,
 )
-from backend.app.schemas.common import OPENAPI_ERROR_RESPONSES
-from backend.app.services.chart_service import ChartService
+from app.schemas.common import OPENAPI_ERROR_RESPONSES
+from app.services.chart_service import ChartService
 
 router = APIRouter(
     prefix="/charts",

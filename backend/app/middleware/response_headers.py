@@ -8,7 +8,7 @@ from starlette.middleware.base import BaseHTTPMiddleware
 from starlette.requests import Request
 from starlette.responses import Response
 
-from backend.app import __version__
+from app import __version__
 
 
 class ResponseHeadersMiddleware(BaseHTTPMiddleware):

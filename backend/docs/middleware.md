@@ -1,6 +1,6 @@
 # Middleware — SupplySight AI
 
-Middleware is registered in `backend.app.main.create_app`. Starlette runs
+Middleware is registered in `app.main.create_app`. Starlette runs
 middleware in **reverse registration order** on the inbound path.
 
 ## Stack (inbound order)
@@ -14,7 +14,7 @@ middleware in **reverse registration order** on the inbound path.
 
 ## RequestIdMiddleware
 
-**Module:** `backend.app.middleware.request_id`
+**Module:** `app.middleware.request_id`
 
 - Reads inbound `X-Request-ID` or generates UUID4
 - Stores on `request.state.request_id`
@@ -23,7 +23,7 @@ middleware in **reverse registration order** on the inbound path.
 
 ## RequestTimingMiddleware
 
-**Module:** `backend.app.middleware.request_timing`
+**Module:** `app.middleware.request_timing`
 
 Logs one line per request:
 
@@ -37,7 +37,7 @@ Client IP prefers `X-Forwarded-For` (first hop) when present.
 
 ## ResponseHeadersMiddleware
 
-**Module:** `backend.app.middleware.response_headers`
+**Module:** `app.middleware.response_headers`
 
 Sets (via `setdefault`, so handlers may override):
 
@@ -62,7 +62,7 @@ Exposes `X-Request-ID`, `X-Process-Time-Ms`, and `X-API-Version` to browsers.
 
 ## Exception interaction
 
-Global handlers in `backend.app.core.exceptions` run after routing failures.
+Global handlers in `app.core.exceptions` run after routing failures.
 They attach the same `request_id` when available. Timing middleware still logs
 duration for successful responses; unhandled exceptions are logged with
 `status=500` before re-raise / handler response.

@@ -6,9 +6,9 @@ from typing import Optional
 
 from fastapi import APIRouter, Query
 
-from backend.app.core.deps import DbSession, OptionalUser
-from backend.app.schemas.common import OPENAPI_ERROR_RESPONSES
-from backend.app.schemas.dashboard import (
+from app.core.deps import DbSession, OptionalUser
+from app.schemas.common import OPENAPI_ERROR_RESPONSES
+from app.schemas.dashboard import (
     CustomersDashboardResponse,
     ExecutiveDashboardResponse,
     GeographicPerformanceResponse,
@@ -18,7 +18,7 @@ from backend.app.schemas.dashboard import (
     SalesPerformanceResponse,
     ShippingPerformanceResponse,
 )
-from backend.app.services.dashboard_service import DashboardService
+from app.services.dashboard_service import DashboardService
 
 router = APIRouter(
     prefix="/dashboard",

@@ -1,15 +1,15 @@
-﻿# Backend — SupplySight AI
+# Backend ? SupplySight AI
 
 FastAPI analytics API over the PostgreSQL ``analytics`` schema.
 
 ## Quick start
 
 ```bash
-# From project root
-pip install -r backend/requirements/base.txt
+# From the backend/ directory
+pip install -r requirements/base.txt
 
-uvicorn backend.app.main:app --reload --host 0.0.0.0 --port 8000
-# or: python -m uvicorn backend.app.main:app --reload
+python -m uvicorn app.main:app --reload
+# or: uvicorn app.main:app --reload --host 0.0.0.0 --port 8000
 ```
 
 - Swagger UI: http://localhost:8000/docs  
@@ -30,15 +30,15 @@ Requires warehouse + analytics views already loaded in PostgreSQL (see `database
 
 ```
 backend/app/
-├── main.py              # FastAPI factory + lifespan
-├── api/                 # Router aggregation
-├── routers/             # /dashboard/*, /charts/*, /health
-├── models/              # SQLAlchemy mappings → analytics views
-├── services/            # Query logic (analytics only)
-├── schemas/             # Pydantic response models
-├── database/            # Engine, pooling, sessions
-├── core/                # Config, logging, errors, auth stubs
-└── utils/               # Helpers
++-- main.py              # FastAPI factory + lifespan
++-- api/                 # Router aggregation
++-- routers/             # /dashboard/*, /charts/*, /health
++-- models/              # SQLAlchemy mappings ? analytics views
++-- services/            # Query logic (analytics only)
++-- schemas/             # Pydantic response models
++-- database/            # Engine, pooling, sessions
++-- core/                # Config, logging, errors, auth stubs
++-- utils/               # Helpers
 ```
 
 ## Endpoints
@@ -64,7 +64,7 @@ Loaded from project-root `.env` (see `.env.example`):
 - `POSTGRES_*` / `DATABASE_URL`
 - `DB_POOL_SIZE`, `DB_MAX_OVERFLOW`, `DB_POOL_TIMEOUT`, `DB_POOL_RECYCLE`
 - `API_PREFIX` (default `/api/v1`)
-- `AUTH_ENABLED=false` — JWT hooks exist in `core/security.py` but are not enforced
+- `AUTH_ENABLED=false` ? JWT hooks exist in `core/security.py` but are not enforced
 
 ## Auth (future)
 
