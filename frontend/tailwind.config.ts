@@ -56,6 +56,17 @@ const config: Config = {
         sans: ["var(--font-geist-sans)", "system-ui", "sans-serif"],
         display: ["var(--font-instrument)", "Georgia", "serif"],
       },
+      fontSize: {
+        xs: ["0.8125rem", { lineHeight: "1.25rem" }],
+        sm: ["0.9375rem", { lineHeight: "1.4rem" }],
+        base: ["1.0625rem", { lineHeight: "1.65rem" }],
+        lg: ["1.1875rem", { lineHeight: "1.75rem" }],
+        xl: ["1.375rem", { lineHeight: "1.9rem" }],
+        "2xl": ["1.625rem", { lineHeight: "2.1rem" }],
+        "3xl": ["2rem", { lineHeight: "2.35rem" }],
+        "4xl": ["2.5rem", { lineHeight: "1.15" }],
+        "5xl": ["3.15rem", { lineHeight: "1.1" }],
+      },
       width: {
         sidebar: "16.5rem",
         "sidebar-collapsed": "4.5rem",

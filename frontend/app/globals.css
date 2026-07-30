@@ -61,11 +61,19 @@
 
   html {
     @apply antialiased;
+    font-size: 17px;
   }
 
   body {
-    @apply bg-background text-foreground;
+    @apply bg-background text-foreground text-base leading-relaxed;
     min-height: 100vh;
+  }
+
+  h1,
+  h2,
+  h3 {
+    @apply tracking-tight;
+    line-height: 1.15;
   }
 }
 

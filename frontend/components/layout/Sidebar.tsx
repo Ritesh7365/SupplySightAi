@@ -78,13 +78,13 @@ export function Sidebar({ className, forceExpanded = false }: SidebarProps) {
           )}
         >
           {isCollapsed ? (
-            <p className="text-center text-[10px] font-semibold uppercase tracking-wider text-muted-foreground">
+            <p className="text-center text-xs font-semibold uppercase tracking-wider text-muted-foreground">
               AI
             </p>
           ) : (
             <>
-              <p className="text-xs font-semibold text-foreground">Enterprise workspace</p>
-              <p className="mt-1 text-[11px] leading-relaxed text-muted-foreground">
+              <p className="text-sm font-semibold text-foreground">Enterprise workspace</p>
+              <p className="mt-1 text-sm leading-relaxed text-muted-foreground">
                 Analytics shell ready for dashboards and insights.
               </p>
             </>
@@ -112,7 +112,7 @@ function NavSection({
     <div>
       <p
         className={cn(
-          "mb-2 px-2 text-[11px] font-semibold uppercase tracking-[0.16em] text-muted-foreground transition-all",
+          "mb-2 px-2 text-xs font-semibold uppercase tracking-[0.14em] text-muted-foreground transition-all",
           collapsed && "text-center tracking-normal",
         )}
       >
@@ -130,7 +130,7 @@ function NavSection({
                 title={collapsed ? item.title : undefined}
                 onClick={onNavigate}
                 className={cn(
-                  "group relative flex items-center gap-3 rounded-xl px-2.5 py-2 text-sm font-medium transition-all duration-200 ease-shell",
+                  "group relative flex items-center gap-3 rounded-xl px-2.5 py-2.5 text-base font-medium transition-all duration-200 ease-shell",
                   active
                     ? "bg-sidebar-accent text-sidebar-accent-foreground shadow-sm"
                     : "text-muted-foreground hover:bg-muted hover:text-foreground",
@@ -146,7 +146,7 @@ function NavSection({
                 />
                 <Icon
                   className={cn(
-                    "size-4 shrink-0 transition-transform duration-200 group-hover:scale-105",
+                    "size-5 shrink-0 transition-transform duration-200 group-hover:scale-105",
                     active && "text-primary",
                   )}
                   aria-hidden

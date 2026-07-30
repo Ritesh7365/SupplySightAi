@@ -74,8 +74,8 @@ export function NotificationBell({ className }: NotificationBellProps) {
         )}
       >
         <div className="flex items-center justify-between px-3 py-2">
-          <p className="text-sm font-semibold text-foreground">Notifications</p>
-          <span className="rounded-full bg-muted px-2 py-0.5 text-[11px] font-medium text-muted-foreground">
+          <p className="text-base font-semibold text-foreground">Notifications</p>
+          <span className="rounded-full bg-muted px-2 py-0.5 text-xs font-medium text-muted-foreground">
             {NOTIFICATIONS.length} new
           </span>
         </div>
@@ -87,9 +87,9 @@ export function NotificationBell({ className }: NotificationBellProps) {
                 role="menuitem"
                 className="w-full rounded-xl px-3 py-2.5 text-left transition-colors hover:bg-muted"
               >
-                <p className="text-sm font-medium text-foreground">{item.title}</p>
-                <p className="mt-0.5 text-xs leading-relaxed text-muted-foreground">{item.body}</p>
-                <p className="mt-1.5 text-[11px] text-muted-foreground/80">{item.time}</p>
+                <p className="text-base font-medium text-foreground">{item.title}</p>
+                <p className="mt-1 text-sm leading-relaxed text-muted-foreground">{item.body}</p>
+                <p className="mt-1.5 text-xs text-muted-foreground/80">{item.time}</p>
               </button>
             </li>
           ))}

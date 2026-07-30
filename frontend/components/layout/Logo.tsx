@@ -18,8 +18,8 @@ export function Logo({ collapsed = false, className }: LogoProps) {
       )}
       aria-label="SupplySight AI home"
     >
-      <span className="flex size-9 shrink-0 items-center justify-center rounded-xl bg-primary text-primary-foreground shadow-sm transition-transform duration-300 ease-shell group-hover:scale-[1.03]">
-        <BrandIcon className="size-4" aria-hidden />
+      <span className="flex size-10 shrink-0 items-center justify-center rounded-xl bg-primary text-primary-foreground shadow-sm transition-transform duration-300 ease-shell group-hover:scale-[1.03]">
+        <BrandIcon className="size-5" aria-hidden />
       </span>
       <span
         className={cn(
@@ -27,10 +27,10 @@ export function Logo({ collapsed = false, className }: LogoProps) {
           collapsed ? "w-0 opacity-0" : "w-auto opacity-100",
         )}
       >
-        <span className="block truncate font-display text-lg leading-none tracking-tight text-foreground">
+        <span className="block truncate font-display text-xl leading-none tracking-tight text-foreground sm:text-2xl">
           SupplySight AI
         </span>
-        <span className="mt-1 block truncate text-[11px] font-medium uppercase tracking-[0.14em] text-muted-foreground">
+        <span className="mt-1.5 block truncate text-xs font-medium uppercase tracking-[0.14em] text-muted-foreground">
           Supply chain analytics
         </span>
       </span>

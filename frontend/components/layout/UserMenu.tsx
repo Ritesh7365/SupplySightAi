@@ -37,14 +37,14 @@ export function UserMenu({ className }: UserMenuProps) {
         onClick={() => setOpen((value) => !value)}
         className="inline-flex h-10 items-center gap-2 rounded-xl border border-border bg-card pl-1.5 pr-2.5 shadow-sm transition-all hover:bg-muted focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
       >
-        <span className="flex size-7 items-center justify-center rounded-lg bg-primary/10 text-xs font-semibold text-primary">
+        <span className="flex size-8 items-center justify-center rounded-lg bg-primary/10 text-sm font-semibold text-primary">
           SA
         </span>
         <span className="hidden min-w-0 text-left md:block">
-          <span className="block truncate text-sm font-medium leading-tight text-foreground">
+          <span className="block truncate text-base font-medium leading-tight text-foreground">
             Supply Admin
           </span>
-          <span className="block truncate text-[11px] leading-tight text-muted-foreground">
+          <span className="block truncate text-xs leading-tight text-muted-foreground">
             Operations
           </span>
         </span>
@@ -68,8 +68,8 @@ export function UserMenu({ className }: UserMenuProps) {
         )}
       >
         <div className="px-3 py-2">
-          <p className="text-sm font-medium text-foreground">Supply Admin</p>
-          <p className="text-xs text-muted-foreground">admin@supplysight.ai</p>
+          <p className="text-base font-medium text-foreground">Supply Admin</p>
+          <p className="text-sm text-muted-foreground">admin@supplysight.ai</p>
         </div>
         <div className="my-1 h-px bg-border" />
         <MenuItem icon={UserRound} label="Profile" />
@@ -95,13 +95,13 @@ function MenuItem({
       type="button"
       role="menuitem"
       className={cn(
-        "flex w-full items-center gap-2 rounded-xl px-3 py-2 text-sm transition-colors",
+        "flex w-full items-center gap-2 rounded-xl px-3 py-2.5 text-base transition-colors",
         tone === "danger"
           ? "text-red-600 hover:bg-red-50 dark:text-red-400 dark:hover:bg-red-950/40"
           : "text-foreground hover:bg-muted",
       )}
     >
-      <Icon className="size-4 opacity-80" aria-hidden />
+      <Icon className="size-5 opacity-80" aria-hidden />
       {label}
     </button>
   );

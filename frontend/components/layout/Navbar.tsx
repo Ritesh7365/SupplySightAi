@@ -20,7 +20,7 @@ export function Navbar({ className }: NavbarProps) {
   return (
     <header
       className={cn(
-        "sticky top-0 z-30 flex h-16 items-center gap-3 border-b border-border bg-navbar/90 px-3 backdrop-blur-md sm:px-4 lg:px-6",
+        "sticky top-0 z-30 flex h-[4.25rem] items-center gap-3 border-b border-border bg-navbar/90 px-3 backdrop-blur-md sm:px-4 lg:px-6",
         className,
       )}
     >
