@@ -186,3 +186,36 @@ class CustomersDashboardResponse(ORMModel):
     segments: List[SegmentSummaryItem] = Field(default_factory=list)
     count: int = 0
     limit: Optional[int] = None
+
+
+class RecentOrderItem(ORMModel):
+    """Recent order row for the executive dashboard table."""
+
+    order_id: int
+    customer_name: str
+    revenue: Decimal
+    status: str
+    order_date: datetime
+
+
+class RecentOrdersResponse(ListResponse[RecentOrderItem]):
+    data: List[RecentOrderItem]
+
+
+class InventoryAlertItem(ORMModel):
+    """Inventory alert derived from public.inventory balances."""
+
+    inventory_id: int
+    product_id: int
+    product_name: str
+    warehouse_id: int
+    quantity_available: Decimal
+    reorder_point: Optional[Decimal] = None
+    alert_type: str = Field(description="out_of_stock | low_stock | reorder_soon")
+
+
+class InventoryAlertsResponse(ListResponse[InventoryAlertItem]):
+    data: List[InventoryAlertItem]
+    out_of_stock_count: int = 0
+    low_stock_count: int = 0
+    reorder_soon_count: int = 0

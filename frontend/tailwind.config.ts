@@ -46,6 +46,12 @@ const config: Config = {
           "accent-foreground": "hsl(var(--sidebar-accent-foreground))",
         },
         navbar: "hsl(var(--navbar))",
+        destructive: {
+          DEFAULT: "hsl(var(--destructive))",
+          foreground: "hsl(var(--destructive-foreground))",
+        },
+        success: "hsl(var(--success))",
+        warning: "hsl(var(--warning))",
       },
       borderRadius: {
         lg: "var(--radius)",

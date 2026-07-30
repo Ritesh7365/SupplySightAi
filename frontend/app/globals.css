@@ -27,6 +27,10 @@
   --sidebar-accent-foreground: 174 62% 22%;
   --navbar: 0 0% 100%;
   --shadow-shell: 0 1px 2px rgb(15 23 42 / 0.04), 0 8px 24px rgb(15 23 42 / 0.06);
+  --destructive: 0 72% 51%;
+  --destructive-foreground: 0 0% 100%;
+  --success: 152 60% 36%;
+  --warning: 38 92% 50%;
 }
 
 .dark {
@@ -52,6 +56,10 @@
   --sidebar-accent-foreground: 174 50% 78%;
   --navbar: 215 24% 10%;
   --shadow-shell: 0 1px 2px rgb(0 0 0 / 0.35), 0 12px 32px rgb(0 0 0 / 0.35);
+  --destructive: 0 62% 55%;
+  --destructive-foreground: 0 0% 100%;
+  --success: 152 55% 45%;
+  --warning: 38 92% 55%;
 }
 
 @layer base {

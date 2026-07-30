@@ -12,7 +12,9 @@ from backend.app.schemas.dashboard import (
     CustomersDashboardResponse,
     ExecutiveDashboardResponse,
     GeographicPerformanceResponse,
+    InventoryAlertsResponse,
     ProductPerformanceResponse,
+    RecentOrdersResponse,
     SalesPerformanceResponse,
     ShippingPerformanceResponse,
 )
@@ -140,3 +142,34 @@ def get_geography_dashboard(
     limit: Optional[int] = Query(default=100, ge=1, le=2000),
 ) -> GeographicPerformanceResponse:
     return DashboardService(db).get_geography(country=country, limit=limit)
+
+
+@router.get(
+    "/recent-orders",
+    response_model=RecentOrdersResponse,
+    summary="Recent orders",
+    description="Latest orders with revenue and status for the executive dashboard table.",
+)
+def get_recent_orders(
+    db: DbSession,
+    _user: OptionalUser,
+    limit: Optional[int] = Query(default=10, ge=1, le=50),
+) -> RecentOrdersResponse:
+    return DashboardService(db).get_recent_orders(limit=limit)
+
+
+@router.get(
+    "/inventory-alerts",
+    response_model=InventoryAlertsResponse,
+    summary="Inventory alerts",
+    description=(
+        "Low stock / out of stock / reorder-soon alerts from public.inventory. "
+        "Returns an empty list when inventory has not been populated."
+    ),
+)
+def get_inventory_alerts(
+    db: DbSession,
+    _user: OptionalUser,
+    limit: Optional[int] = Query(default=20, ge=1, le=100),
+) -> InventoryAlertsResponse:
+    return DashboardService(db).get_inventory_alerts(limit=limit)

@@ -1,15 +1,12 @@
-﻿# frontend/components/dashboard
+﻿# Dashboard components
 
-## Purpose
+Executive dashboard widgets wired to FastAPI analytics endpoints via React Query.
 
-UI components for the **dashboard** domain of SupplySight AI.
-
-## Contents
-
-Placeholder only — no components implemented yet.
-
-## Future Implementation
-
-- Presentational and container components for dashboard
-- Charts/tables where applicable (Recharts)
-- Loading, empty, and error states
+| Component | Source |
+|-----------|--------|
+| `KpiGrid` | `GET /dashboard/executive` (+ MoM from monthly sales) |
+| `RevenueTrendChart` | `GET /charts/monthly-sales` |
+| `RegionDonutChart` | `GET /dashboard/geography` |
+| `TopProductsChart` | `GET /charts/top-products` |
+| `RecentOrdersTable` | `GET /dashboard/recent-orders` |
+| `InventoryAlertsPanel` | `GET /dashboard/inventory-alerts` |
