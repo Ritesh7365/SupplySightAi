@@ -16,15 +16,26 @@ from typing import AsyncIterator
 
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.middleware.gzip import GZipMiddleware
 
 from backend.app import __version__
 from backend.app.api.router import build_api_router
 from backend.app.core.config import get_settings
 from backend.app.core.exceptions import register_exception_handlers
 from backend.app.core.logging import get_logger, setup_logging
+from backend.app.core.openapi import API_DESCRIPTION, OPENAPI_CONTACT, OPENAPI_LICENSE, OPENAPI_TAGS
 from backend.app.database.session import dispose_engine, init_db
+from backend.app.middleware import (
+    RequestIdMiddleware,
+    RequestTimingMiddleware,
+    ResponseHeadersMiddleware,
+)
+from backend.app.routers import health as health_router
 
 logger = get_logger("main")
+
+# GZip responses larger than this many bytes
+GZIP_MINIMUM_SIZE = 1000
 
 
 @asynccontextmanager
@@ -40,41 +51,60 @@ async def lifespan(_app: FastAPI) -> AsyncIterator[None]:
         settings.auth_enabled,
     )
     init_db(settings)
-    logger.info("Database pool initialized")
+    logger.info(
+        "Database pool initialized (size=%s, max_overflow=%s, recycle=%s)",
+        settings.db_pool_size,
+        settings.db_max_overflow,
+        settings.db_pool_recycle,
+    )
     yield
     dispose_engine()
     logger.info("Shutdown complete")
 
 
 def create_app() -> FastAPI:
-    """Application factory."""
+    """Application factory with production middleware stack."""
     settings = get_settings()
 
     app = FastAPI(
         title=settings.app_name,
         version=__version__,
-        description=(
-            "SupplySight AI analytics API. "
-            "Dashboard and chart endpoints read from the PostgreSQL "
-            "``analytics`` schema (views / materialized views). "
-            "Authentication is prepared but not enforced (`AUTH_ENABLED=false`)."
-        ),
+        description=API_DESCRIPTION,
         docs_url="/docs",
         redoc_url="/redoc",
         openapi_url="/openapi.json",
         lifespan=lifespan,
         debug=settings.app_debug,
+        openapi_tags=OPENAPI_TAGS,
+        contact=OPENAPI_CONTACT,
+        license_info=OPENAPI_LICENSE,
     )
 
+    # Middleware order: last added runs first on the request path.
+    # Request enters: RequestId → Timing → ResponseHeaders → CORS → GZip → app
+    app.add_middleware(GZipMiddleware, minimum_size=GZIP_MINIMUM_SIZE)
     app.add_middleware(
         CORSMiddleware,
-        allow_origins=settings.cors_origins or ["*"],
+        allow_origins=settings.cors_origins,
         allow_credentials=True,
         allow_methods=["*"],
         allow_headers=["*"],
+        expose_headers=[
+            "X-Request-ID",
+            "X-Process-Time-Ms",
+            "X-API-Version",
+        ],
     )
+    app.add_middleware(ResponseHeadersMiddleware)
+    app.add_middleware(RequestTimingMiddleware)
+    app.add_middleware(RequestIdMiddleware)
 
     register_exception_handlers(app)
+
+    # Orchestrator health probes at root (not under /api/v1)
+    app.include_router(health_router.router)
+
+    # Versioned business API
     app.include_router(build_api_router(), prefix=settings.api_prefix)
 
     @app.get("/", include_in_schema=False)
@@ -83,6 +113,7 @@ def create_app() -> FastAPI:
             "app": settings.app_name,
             "version": __version__,
             "docs": "/docs",
+            "health": "/health",
             "api_prefix": settings.api_prefix,
         }
 

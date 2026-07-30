@@ -14,9 +14,17 @@ uvicorn backend.app.main:app --reload --host 0.0.0.0 --port 8000
 
 - Swagger UI: http://localhost:8000/docs  
 - ReDoc: http://localhost:8000/redoc  
-- Health: http://localhost:8000/api/v1/health  
+- Health: http://localhost:8000/health  
+- Readiness: http://localhost:8000/health/readiness  
 
 Requires warehouse + analytics views already loaded in PostgreSQL (see `database/`).
+
+## Production infrastructure
+
+- GZip (min 1000 bytes), configurable CORS, request ID + timing logs, response headers
+- Pooled SQLAlchemy (size / overflow / recycle / pre-ping)
+- Global handlers for 404 / 422 / 500 / DB errors
+- Docs: [`docs/backend_architecture.md`](docs/backend_architecture.md), [`docs/api_overview.md`](docs/api_overview.md), [`docs/middleware.md`](docs/middleware.md)
 
 ## Layout
 

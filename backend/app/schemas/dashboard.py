@@ -6,13 +6,33 @@ from datetime import datetime
 from decimal import Decimal
 from typing import List, Optional
 
-from pydantic import Field
+from pydantic import ConfigDict, Field
 
 from backend.app.schemas.common import ListResponse, ORMModel
 
 
 class ExecutiveDashboardResponse(ORMModel):
     """KPIs from analytics.vw_executive_dashboard."""
+
+    model_config = ConfigDict(
+        from_attributes=True,
+        json_schema_extra={
+            "examples": [
+                {
+                    "total_sales": "36784734.31",
+                    "total_profit": "3966902.97",
+                    "total_orders": 65752,
+                    "total_customers": 20652,
+                    "average_order_value": "559.45",
+                    "late_delivery_pct": "54.82",
+                    "total_shipments": 65752,
+                    "late_shipments": 36048,
+                    "overall_profit_margin_pct": "10.78",
+                    "refreshed_at": "2026-07-30T13:00:00+05:30",
+                }
+            ]
+        },
+    )
 
     total_sales: Decimal
     total_profit: Decimal

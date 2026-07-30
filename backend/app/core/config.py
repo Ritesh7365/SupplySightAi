@@ -44,7 +44,12 @@ class Settings(BaseSettings):
     api_port: int = Field(default=8000, alias="API_PORT")
     api_prefix: str = Field(default="/api/v1", alias="API_PREFIX")
     cors_origins: List[str] = Field(
-        default_factory=lambda: ["http://localhost:3000"],
+        default_factory=lambda: [
+            "http://localhost:3000",
+            "http://localhost:3001",
+            "http://localhost:5173",
+            "http://localhost:8000",
+        ],
         alias="CORS_ORIGINS",
     )
 

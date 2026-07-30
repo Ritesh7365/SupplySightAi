@@ -12,9 +12,14 @@ from backend.app.schemas.charts import (
     TopCustomersChartResponse,
     TopProductsChartResponse,
 )
+from backend.app.schemas.common import OPENAPI_ERROR_RESPONSES
 from backend.app.services.chart_service import ChartService
 
-router = APIRouter(prefix="/charts", tags=["Charts"])
+router = APIRouter(
+    prefix="/charts",
+    tags=["Charts"],
+    responses=OPENAPI_ERROR_RESPONSES,
+)
 
 
 @router.get(

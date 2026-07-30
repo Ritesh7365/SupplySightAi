@@ -9,7 +9,7 @@ from __future__ import annotations
 from collections.abc import Generator
 from typing import Optional
 
-from sqlalchemy import create_engine, text
+from sqlalchemy import create_engine, event, text
 from sqlalchemy.engine import Engine
 from sqlalchemy.orm import Session, sessionmaker
 
@@ -32,13 +32,24 @@ def create_db_engine(settings: Optional[Settings] = None) -> Engine:
         pool_timeout=cfg.db_pool_timeout,
         pool_recycle=cfg.db_pool_recycle,
         pool_pre_ping=True,
+        pool_use_lifo=True,
         echo=cfg.db_echo,
         future=True,
+        connect_args={
+            "application_name": "supplysight_api",
+            "connect_timeout": 10,
+        },
     )
+
+    @event.listens_for(engine, "checkout")
+    def _on_checkout(dbapi_connection, connection_record, connection_proxy):  # noqa: ANN001
+        logger.debug("DB pool checkout")
+
     logger.info(
-        "SQLAlchemy engine created (pool_size=%s, max_overflow=%s)",
+        "SQLAlchemy engine created (pool_size=%s, max_overflow=%s, pool_recycle=%s, pre_ping=True)",
         cfg.db_pool_size,
         cfg.db_max_overflow,
+        cfg.db_pool_recycle,
     )
     return engine
 
@@ -66,13 +77,22 @@ def get_engine() -> Engine:
 
 
 def get_db() -> Generator[Session, None, None]:
-    """FastAPI dependency that yields a DB session and closes it."""
+    """
+    FastAPI dependency that yields a DB session.
+
+    Commits are not performed automatically (read-heavy API). On exception the
+    session is rolled back; the connection is always closed / returned to pool.
+    """
     if _SessionLocal is None:
         init_db()
     assert _SessionLocal is not None
+
     db = _SessionLocal()
     try:
         yield db
+    except Exception:
+        db.rollback()
+        raise
     finally:
         db.close()
 
@@ -83,6 +103,23 @@ def check_db_connection() -> bool:
     with engine.connect() as conn:
         conn.execute(text("SELECT 1"))
     return True
+
+
+def get_pool_status() -> dict[str, int | str | None]:
+    """Return best-effort pool statistics for health endpoints."""
+    engine = get_engine()
+    pool = engine.pool
+    status: dict[str, int | str | None] = {
+        "pool_class": pool.__class__.__name__,
+    }
+    for attr in ("size", "checkedin", "checkedout", "overflow"):
+        method = getattr(pool, attr, None)
+        if callable(method):
+            try:
+                status[attr] = int(method())
+            except Exception:  # noqa: BLE001
+                status[attr] = None
+    return status
 
 
 def dispose_engine() -> None:
