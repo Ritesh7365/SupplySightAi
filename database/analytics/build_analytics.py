@@ -137,6 +137,15 @@ def main() -> int:
     args = parser.parse_args()
 
     setup_module_logging()
+    # Also surface this module's logger (postgres helper only configures supplysight.postgres)
+    if not logger.handlers:
+        handler = logging.StreamHandler()
+        handler.setFormatter(
+            logging.Formatter("%(asctime)s | %(levelname)-8s | %(name)s | %(message)s")
+        )
+        logger.addHandler(handler)
+        logger.setLevel(logging.INFO)
+        logger.propagate = False
     logger.info("Analytics build starting")
 
     try:
