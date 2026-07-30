@@ -38,6 +38,14 @@ const config: Config = {
           DEFAULT: "hsl(var(--card))",
           foreground: "hsl(var(--card-foreground))",
         },
+        sidebar: {
+          DEFAULT: "hsl(var(--sidebar))",
+          foreground: "hsl(var(--sidebar-foreground))",
+          border: "hsl(var(--sidebar-border))",
+          accent: "hsl(var(--sidebar-accent))",
+          "accent-foreground": "hsl(var(--sidebar-accent-foreground))",
+        },
+        navbar: "hsl(var(--navbar))",
       },
       borderRadius: {
         lg: "var(--radius)",
@@ -48,6 +56,14 @@ const config: Config = {
         sans: ["var(--font-geist-sans)", "system-ui", "sans-serif"],
         display: ["var(--font-instrument)", "Georgia", "serif"],
       },
+      width: {
+        sidebar: "16.5rem",
+        "sidebar-collapsed": "4.5rem",
+      },
+      spacing: {
+        sidebar: "16.5rem",
+        "sidebar-collapsed": "4.5rem",
+      },
       keyframes: {
         "fade-up": {
           from: { opacity: "0", transform: "translateY(12px)" },
@@ -57,10 +73,18 @@ const config: Config = {
           from: { opacity: "0" },
           to: { opacity: "1" },
         },
+        "slide-in-left": {
+          from: { opacity: "0", transform: "translateX(-12px)" },
+          to: { opacity: "1", transform: "translateX(0)" },
+        },
       },
       animation: {
         "fade-up": "fade-up 0.7s ease-out forwards",
         "fade-in": "fade-in 1s ease-out forwards",
+        "slide-in-left": "slide-in-left 0.25s ease-out forwards",
+      },
+      transitionTimingFunction: {
+        shell: "cubic-bezier(0.22, 1, 0.36, 1)",
       },
     },
   },

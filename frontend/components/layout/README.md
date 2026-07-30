@@ -1,15 +1,19 @@
-﻿# frontend/components/layout
+﻿# Layout components
 
-## Purpose
+Production application shell for SupplySight AI (sidebar, navbar, theme, responsive drawer).
 
-UI components for the **layout** domain of SupplySight AI.
+| Component | Role |
+|-----------|------|
+| `AppShell.tsx` | Composes sidebar + navbar + content frame |
+| `ResponsiveSidebar.tsx` | Desktop rail + mobile drawer |
+| `Sidebar.tsx` | Navigation links and collapse control |
+| `Navbar.tsx` | Search, notifications, theme, user, breadcrumbs |
+| `Logo.tsx` | Brand lockup |
+| `Breadcrumbs.tsx` | Route trail |
+| `ThemeToggle.tsx` / `ThemeProvider.tsx` | Light / dark mode |
+| `UserMenu.tsx` | Account menu |
+| `SearchBar.tsx` | Workspace search field |
+| `NotificationBell.tsx` | Notification panel |
+| `PageHeader.tsx` / `EmptyCanvas.tsx` | Page chrome without KPI/charts |
 
-## Contents
-
-Placeholder only — no components implemented yet.
-
-## Future Implementation
-
-- Presentational and container components for layout
-- Charts/tables where applicable (Recharts)
-- Loading, empty, and error states
+No API calls or business logic live in these components.
